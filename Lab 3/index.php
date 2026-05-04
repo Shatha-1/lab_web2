@@ -1,8 +1,8 @@
 <?php
-// constant
+// (1) constant
 define("NAME", "Shatha");
 
-// random number
+// (2) variable (random number)
 $numberOfToday = rand(1,10);
 ?>
 
@@ -13,10 +13,21 @@ $numberOfToday = rand(1,10);
 </head>
 <body>
 
-<p>Hello <?php echo NAME; ?>!</p>
+<!-- (3) paragraph 1 -->
+<p>
+<?php
+echo "Hello " . NAME . "!";
+?>
+</p>
 
-<p>Your number today is <?php echo $numberOfToday; ?></p>
+<!-- (4) paragraph 2 -->
+<p>
+<?php
+echo "Your number today is " . $numberOfToday;
+?>
+</p>
 
+<!-- (5) paragraph 3 (condition) -->
 <p>
 <?php
 if ($numberOfToday >= 1 && $numberOfToday <= 5) {
