@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online KSA Store</title>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Online KSA Store</h1>
+
+<h3>Find Customers based on location</h3>
+
+<P>Choose a location:</p>
+<select id="location">
+    <option value="1">Riyadh</option>
+    <option value="2">Jeddah</option>
+    <option value="3">Dammam</option>
+</select>
+
+<button id="searchBtn">Search</button>
+
+<h3>Results:</h3>
+<div id="result"></div>
+
+<script>
+$(document).ready(function(){
+
+    $("#searchBtn").click(function(){
+
+        var location = $("#location").val();
+
+        $.post("searchCustomers.php",
+        {
+            locationID: location
+        },
+        function(response){
+
+            var data = JSON.parse(response);
+
+            $("#result").html("");
+
+            for (var i = 0; i < data.length; i++) {
+                $("#result").append(
+                    data[i].customerID + ", " +
+                    data[i].name + ", " +
+                    data[i].email + ", " +
+                    data[i].age + "<br>"
+                );
+            }
+
+        });
+
+    });
+
+});
+</script>
+
+</body>
+</html>
