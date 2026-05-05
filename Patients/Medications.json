@@ -1,0 +1,27 @@
+[
+  {
+    "MedicationID": "111",
+    "drugClass": "Antibiotic",
+    "Manufacturer": "Amoxil"
+  },
+  {
+    "MedicationID": "222",
+    "drugClass": "PainRelief",
+    "Manufacturer": "Advil"
+  },
+  {
+    "MedicationID": "333",
+    "drugClass": "PainRelief",
+    "Manufacturer": "Aleve"
+  },
+  {
+    "MedicationID": "444",
+    "drugClass": "Antibiotic",
+    "Manufacturer": "MediQuik"
+  },
+  {
+    "MedicationID": "555",
+    "drugClass": "PainRelief",
+    "Manufacturer": "ConZip"
+  }
+]
