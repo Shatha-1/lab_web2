@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Today's Joke</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <style>
+        #setup {
+            color: green;
+            font-weight: bold;
+        }
+
+        #punchline {
+            color: blue;
+            font-weight: bold;
+        }
+
+        #jokeDiv, #likedJokesTable {
+            border: 1px solid black;
+            width: 600px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+
+            var likedJokes = [];
+
+            function displayJoke() {
+                var type = $("#jokeType").val();
+
+                $.get("getJoke.php",
+                    { type: type },
+                    function (response) {
+                        var joke = JSON.parse(response);
+
+                        $("#setup").text(joke[0].setup);
+                        $("#punchline").text(joke[0].punchline);
+                    }
+                );
+            }
+
+            displayJoke();
+
+            $("#changeJoke").click(function () {
+                displayJoke();
+            });
+
+            $("#likeJoke").click(function () {
+                var setup = $("#setup").text();
+                var punchline = $("#punchline").text();
+
+                var joke = {
+                    setup: setup,
+                    punchline: punchline
+                };
+
+                likedJokes.push(joke);
+
+                $("#likedJokesTable").append(
+                    "<tr><td>" + $("#jokeDiv").html() + "</td></tr>"
+                );
+            });
+
+            $("#send").click(function () {
+                var email = $("#email").val();
+
+                $.post("scheduleEmail.php",
+                    {
+                        email: email,
+                        jokes: likedJokes
+                    },
+                    function (response) {
+                        if (response == "done") {
+                            alert("Email scheduled successfully.");
+                            $("#email").val("");
+                        } else {
+                            alert("Error occurred.");
+                        }
+                    }
+                );
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+<h2>Today's Joke</h2>
+
+Joke Type:
+<select id="jokeType">
+    <option value="general">general</option>
+    <option value="knock-knock">knock-knock</option>
+    <option value="programming" selected>programming</option>
+    <option value="dad">dad</option>
+</select>
+
+<div id="jokeDiv">
+    <span id="setup"></span><br>
+    <span id="punchline"></span>
+</div>
+
+<br>
+
+<button id="changeJoke">Change Joke</button>
+<button id="likeJoke">Like Joke</button>
+
+<h2>Liked Jokes</h2>
+<table id="likedJokesTable"></table>
+
+<h2>Send Jokes to Friend</h2>
+
+<p>Make your friend smile today:</p>
+
+Email Address:
+<input type="text" id="email">
+<button id="send">Send</button>
+
+</body>
+</html>
