@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online KSA Store</title>
+    <script>
+        function searchCustomers() {
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    if (xhr.status == 200) {
+                        var data = JSON.parse(xhr.responseText);
+
+                        document.getElementById("result").innerHTML = "";
+
+                        for (var i = 0; i < data.length; i++) {
+                            document.getElementById("result").innerHTML +=
+                                data[i].customerID + ", " +
+                                data[i].name + ", " +
+                                data[i].email + ", " +
+                                data[i].age + "<br>";
+                        }
+                    } else {
+                        document.getElementById("result").innerHTML =
+                            "Error: " + xhr.status;
+                    }
+                }
+            };
+
+            var location = document.getElementById("location").value;
+
+            xhr.open("POST", "searchCustomers.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send("locationID=" + location);
+        }
+    </script>
+</head>
+<body>
+
+<h1>Online KSA Store</h1>
+<h3>Find Customers based on location</h3>
+
+Choose a location:
+<select id="location">
+    <option value="1">Riyadh</option>
+    <option value="2">Jeddah</option>
+    <option value="3">Dammam</option>
+</select>
+
+<button onclick="searchCustomers()">Search</button>
+
+<h3>Results:</h3>
+<div id="result"></div>
+
+</body>
+</html>
